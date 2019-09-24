@@ -10,7 +10,9 @@
 
 <h1><?php echo __('Colors in a first block'); ?></h1>
 <ul>
-    <?php foreach ($block->getColorNames() as $colorName): ?>
-        <li><?php echo __('Color "%1"', $colorName); ?></li>
+    <?php
+    /** @var \Addeos\ReqRes\Model\Color $color */
+    foreach ($block->getColors() as $color): ?>
+        <li><?php echo __('Color "%1"', $color->getName()); ?></li>
     <?php endforeach; ?>
 </ul>

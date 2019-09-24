@@ -7,7 +7,8 @@
 
 namespace Addeos\ReqRes\Block;
 
-use Addeos\ReqRes\Model\Colors as ColorsModel;
+use Addeos\ReqRes\Model\ColorRepositoryInterface;
+use Addeos\ReqRes\Model\ColorRepositoryInterfaceFactory;
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
 
@@ -18,34 +19,31 @@ use Magento\Framework\View\Element\Template\Context;
 class ColorsAgain extends Template
 {
     /**
-     * @var ColorsModel
+     * @var ColorRepositoryInterface
      */
-    private $colorsModel;
+    private $colorRepositoryInterface;
 
     /**
      * Main constructor.
      * @param Context $context
-     * @param ColorsModel $colorsModel
+     * @param ColorRepositoryInterfaceFactory $colorRepositoryInterfaceFactory
      * @param array $data
      */
-    public function __construct(Context $context, ColorsModel $colorsModel, array $data = [])
-    {
-        $this->colorsModel = $colorsModel;
+    public function __construct(
+        Context $context,
+        ColorRepositoryInterfaceFactory $colorRepositoryInterfaceFactory,
+        array $data = []
+    ) {
+        $this->colorRepositoryInterface = $colorRepositoryInterfaceFactory->create();
         parent::__construct($context, $data);
     }
 
     /**
-     * Return color names
      * @return array
      */
-    public function getColorNames()
+    public function getColors()
     {
-        $colorNames = [];
-        foreach ($this->colorsModel->getColors() as $color) {
-            if (isset($color['name'])) {
-                $colorNames[] = $color['name'];
-            }
-        }
-        return $colorNames;
+        $colors = $this->colorRepositoryInterface->getList();
+        return $colors;
     }
 }
