@@ -7,6 +7,24 @@
 
 /** @var \Addeos\ReqRes\Block\Colors $block */
 ?>
+<script type="text/x-magento-init">
+    {
+        "#div-container": {
+            "Magento_Ui/js/core/app": {
+               "components": {
+                    "demo-ko-component": {
+                        "component" : "Addeos_ReqRes/js/ko-component",
+                        "config" : {
+                            "template":  "Addeos_ReqRes/ko-template"
+                        },
+                        "colors":"<?php echo json_encode($block->getColors()); ?>"
+                    }
+                }
+            }
+        }
+    }
+
+</script>
 
 <h1><?php echo __('Colors in a first block'); ?></h1>
 <ul>
@@ -16,3 +34,8 @@
         <li><?php echo __('Color "%1"', $color->getName()); ?></li>
     <?php endforeach; ?>
 </ul>
+
+
+<div id="div-container" data-bind="scope: 'demo-ko-component'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
